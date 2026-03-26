@@ -37,9 +37,14 @@
     }
 
     video {
-      display: none;
-      width: 80%;
-      margin-top: 20px;
+     display: none;
+     position: fixed;
+     top: 0;
+     left: 0;
+     width: 100vw;
+     height: 100vh;
+     object-fit: cover; /* 画面いっぱいに広げる */
+     z-index: -1; /* 背景にする */
     }
 
     /* 右下カウント */
@@ -62,6 +67,7 @@
 <button id="btn">開く</button>
 
 <video id="video" src="kari.mp4"></video>
+<video id="video" autoplay muted playsinline loop></video>
 
 <div id="counter"></div>
 
