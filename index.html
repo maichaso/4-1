@@ -43,14 +43,41 @@
      left: 0;
      width: 100vw;
      height: 100vh;
-     object-fit: cover; /* 画面いっぱいに広げる */
-     z-index: -1; /* 背景にする */
+     object-fit: cover;
+     z-index: -1;
     }
 
     .spawn-img {
      position: fixed;
-     width: 80px;
+     width: 300px;
      pointer-events: none;
+    }
+
+    @media (max-width: 600px) {
+     img {
+      width: 120px;
+     }
+
+     .spawn-img {
+      width: 60px;
+     }
+
+     body {
+      margin-top: 40%;
+     }
+
+     #btn {
+      font-size: 24px;
+     }
+
+     h1 {
+     font-size: 22px;
+     }
+
+     video {
+     object-fit: contain;
+     background-color: white;
+     }
     }
     
 
@@ -58,15 +85,13 @@
 </head>
 <body>
 
-<img src="スクリーンショット 2026-03-04 020113.png">
+<img src="kusari.png">
 
 <p id="sub">https://fantea.jp/maichaso/1218</p>
 <h1>外部サイトを開こうとしています。</h1>
 <button id="btn">開く</button>
 
 <video id="video" src="kari.mp4" autoplay muted playsinline loop></video>
-
-<div id="counter"></div>
 
 <script>
   function createImage(x, y) {
@@ -82,7 +107,6 @@
 
   const btn = document.getElementById("btn");
   const video = document.getElementById("video");
-  const counter = document.getElementById("counter");
 
   let clickCount = 0;
 
@@ -94,10 +118,12 @@
     video.style.display = "block";
     video.play();
 
-    createImage(
-    window.innerWidth / 2 - 40,
-    window.innerHeight / 2 - 40
-    );
+ const size = window.innerWidth < 600 ? 60 : 300;
+
+ createImage(
+  window.innerWidth / 2 - size / 2,
+  window.innerHeight / 2 - size / 2
+  );
 
   };
 
@@ -110,9 +136,11 @@ document.body.addEventListener("click", (e) => {
 
     clickCount++;
 
-    const x = Math.random() * (window.innerWidth - 80);
-    const y = Math.random() * (window.innerHeight - 80);
-    createImage(x, y);
+  const size = window.innerWidth < 600 ? 60 : 300;
+
+  const x = Math.random() * (window.innerWidth - size);
+  const y = Math.random() * (window.innerHeight - size);
+  createImage(x, y);
 
     if (clickCount >= 10) {
       window.location.href = "https://x.com/maichaso_VRC";
