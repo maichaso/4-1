@@ -47,15 +47,13 @@
      z-index: -1; /* 背景にする */
     }
 
-    /* 右下カウント */
-    #counter {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      font-size: 25px;
-      color: gray;
-      display: none;
+    .spawn-img {
+     position: fixed;
+     width: 80px;
+     pointer-events: none;
     }
+    
+
   </style>
 </head>
 <body>
@@ -66,12 +64,22 @@
 <h1>外部サイトを開こうとしています。</h1>
 <button id="btn">開く</button>
 
-<video id="video" src="kari.mp4"></video>
-<video id="video" autoplay muted playsinline loop></video>
+<video id="video" src="kari.mp4" autoplay muted playsinline loop></video>
 
 <div id="counter"></div>
 
 <script>
+  function createImage(x, y) {
+  const img = document.createElement("img");
+  img.src = "スクリーンショット 2026-03-04 020113.png";
+  img.className = "spawn-img";
+
+  img.style.left = x + "px";
+  img.style.top = y + "px";
+
+  document.body.appendChild(img);
+  }
+
   const btn = document.getElementById("btn");
   const video = document.getElementById("video");
   const counter = document.getElementById("counter");
@@ -86,27 +94,33 @@
     video.style.display = "block";
     video.play();
 
-    counter.style.display = "block";
-    counter.textContent = "11";
+    createImage(
+    window.innerWidth / 2 - 40,
+    window.innerHeight / 2 - 40
+    );
+
   };
 
-  document.body.onclick = () => {
-    if (video.style.display === "block") {
-      video.currentTime = 0;
-      video.play();
 
-      clickCount++;
+document.body.addEventListener("click", (e) => {
+  if (video.style.display === "block") {
 
-      let remaining = 11 - clickCount;
+    // ボタンは無視
+    if (e.target.id === "btn") return;
 
-      if (remaining > 0) {
-        counter.textContent = remaining;
-      } else {
-        counter.textContent = "0";
-        window.location.href = "https://x.com/maichaso_VRC";
-      }
+    clickCount++;
+
+    const x = Math.random() * (window.innerWidth - 80);
+    const y = Math.random() * (window.innerHeight - 80);
+    createImage(x, y);
+
+    if (clickCount >= 10) {
+      window.location.href = "https://x.com/maichaso_VRC";
     }
-  };
+  }
+});
+
+
 </script>
 
 </body>
