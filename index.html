@@ -49,17 +49,17 @@
 
     .spawn-img {
      position: fixed;
-     width: 300px;
+     width: 600px;
      pointer-events: none;
     }
 
     @media (max-width: 600px) {
      img {
-      width: 120px;
+      width: 100px;
      }
 
      .spawn-img {
-      width: 60px;
+      width: 300px;
      }
 
      body {
@@ -74,11 +74,11 @@
      }
 
      #btn {
-      font-size: 24px;
+      font-size: 20px;
      }
 
      h1 {
-     font-size: 22px;
+     font-size: 20px;
      }
 
      video {
@@ -90,7 +90,6 @@
 
   </style>
 </head>
-
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -129,7 +128,7 @@
     video.style.display = "block";
     video.play();
 
- const size = window.innerWidth < 600 ? 60 : 300;
+ const size = window.innerWidth < 600 ? 300 : 600;
 
  createImage(
   window.innerWidth / 2 - size / 2,
@@ -147,10 +146,21 @@ document.body.addEventListener("click", (e) => {
 
     clickCount++;
 
-  const size = window.innerWidth < 600 ? 60 : 300;
+  const margin = 100;
+  const size = window.innerWidth < 600 ? 300 : 600;
 
-  const x = Math.random() * (window.innerWidth - size);
-  const y = Math.random() * (window.innerHeight - size);
+let x, y;
+
+do {
+   x = Math.random() * (window.innerWidth - size - margin * 2) + margin;
+   y = Math.random() * (window.innerHeight - size - margin * 2) + margin;
+  } while (
+   x > window.innerWidth / 2 - 200 &&
+   x < window.innerWidth / 2 + 200 &&
+   y > window.innerHeight / 2 - 200 &&
+   y < window.innerHeight / 2 + 200
+  );
+
   createImage(x, y);
 
     if (clickCount >= 10) {
