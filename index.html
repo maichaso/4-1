@@ -59,18 +59,18 @@
      }
 
      .spawn-img {
-      width: 100px;
+      width: 100px; /* 見せられないよ貼ったらいじる */
      }
 
-     body {
-      margin-top: 0; /* ←これ消す */
+     body{
+      margin-top: 0;
       height: 100vh;
 
       flex-direction: column;
       display: flex;
       flex-direction: column;
-      justify-content: center; /* 縦中央 */
-      align-items: center;     /* 横中央 */
+      justify-content: center;
+      align-items: center;
      }
 
      #btn {
@@ -85,7 +85,7 @@
      object-fit: contain;
      background-color: white;
      }
-    }
+    
     
 
   </style>
@@ -104,6 +104,19 @@
 <video id="video" src="kari.mp4" autoplay muted playsinline loop></video>
 
 <script>
+  let positions = [];
+
+  function isTooClose(x, y) {
+  for (let p of positions) {
+    const dx = p.x - x;
+    const dy = p.y - y;
+    const distance = Math.sqrt(dx * dx + dy * dy);
+
+    if (distance < 150) return true;
+  }
+  return false;
+}
+
   function createImage(x, y) {
   const img = document.createElement("img");
   img.src = "スクリーンショット 2026-03-04 020113.png";
@@ -128,7 +141,7 @@
     video.style.display = "block";
     video.play();
 
- const size = window.innerWidth < 600 ? 150 : 600;
+ const size = window.innerWidth < 600 ? 100 : 600;
 
  
   };
@@ -137,13 +150,12 @@
 document.body.addEventListener("click", (e) => {
   if (video.style.display === "block") {
 
-    // ボタンは無視
     if (e.target.id === "btn") return;
 
     clickCount++;
 
   const margin = 100;
-  const size = window.innerWidth < 600 ? 150 : 600;
+  const size = window.innerWidth < 600 ? 100 : 600;
 
 let x, y;
 
@@ -157,7 +169,8 @@ do {
    y < window.innerHeight / 2 + 200
   );
 
-  createImage(x, y);
+createImage(x, y);
+positions.push({ x, y });
 
     if (clickCount >= 10) {
       window.location.href = "https://x.com/maichaso_VRC";
